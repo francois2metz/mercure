@@ -54,7 +54,10 @@ describe('POST /download', function() {
     it('should store the file on the fs', function(done) {
         downloadWitchCallback('test.mp3', function(res) {
             fs.exists(__dirname + '/../data/test.mp3', function(exist) {
-                if (exist) done();
+                if (exist) {
+                    assert.equal(fs.readFileSync(__dirname +'/../data/test.mp3'), 'test');
+                    done();
+                }
                 else done(exist);
             });
         });
