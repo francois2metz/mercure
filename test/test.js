@@ -69,8 +69,26 @@ describe('POST /download', function() {
         });
     });
 
+    it('should don\'t fail with / in the filename', function(done) {
+        downloadWitchCallback('roger/', function(res) {
+            fs.exists(__dirname + '/../data/index', function(exist) {
+                if (exist) done();
+                else done(exist);
+            });
+        });
+    });
+
     it('should extract the mp3 name from the Content-disposition header if available', function(done) {
         downloadWitchCallback('downloadattachment', function(req) {
+            fs.exists(__dirname + '/../data/My Shiny mp3.mp3', function(exist) {
+                if (exist) done();
+                else done(exist);
+            });
+        });
+    });
+
+    it('should don\'t fail with / in the Content-Disposition filename', function(done) {
+        downloadWitchCallback('baddownloadattachmentwithslash', function(req) {
             fs.exists(__dirname + '/../data/My Shiny mp3.mp3', function(exist) {
                 if (exist) done();
                 else done(exist);

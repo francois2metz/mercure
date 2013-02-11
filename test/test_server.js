@@ -19,6 +19,13 @@ app.get('/downloadattachment', function(req, res) {
     res.send('test');
 });
 
+app.get('/baddownloadattachmentwithslash', function(req, res) {
+    res.set({
+        'Content-Disposition': 'attachment; filename="data/My Shiny mp3.mp3"'
+    });
+    res.send('test');
+});
+
 app.get('/baddownloadattachment', function(req, res) {
     res.set({
         'Content-Disposition': 'attachment; filename=""'
