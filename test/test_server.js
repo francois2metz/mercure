@@ -3,12 +3,12 @@ var express = require('express');
 var app = express();
 app.use(express.bodyParser());
 
-app.get('/test.mp3', function(req, res) {
+app.get('/:name.mp3', function(req, res) {
     app.emit('download', req);
     res.send('test');
 });
 
-app.get('/New One.mp3', function(req, res) {
+app.get('/roger/', function(req, res) {
     res.send('test');
 });
 

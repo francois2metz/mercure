@@ -126,4 +126,13 @@ describe('POST /download', function() {
                 });
         });
     });
+
+    it('should destroy the file if the server respond with an error', function(done) {
+        downloadWitchCallback('404', function(req) {
+            fs.exists(__dirname + '/../data/404', function(exist) {
+                if (exist) done(false);
+                else done();
+            });
+        });
+    });
 });
