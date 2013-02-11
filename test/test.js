@@ -32,48 +32,58 @@ describe('POST /download', function() {
         });
     });
 
-    it('should store the file on the fs', function(done) {
+    function downloadWitchCallback(file, callback) {
         var s = test_server.listen(function() {
             var base_url = 'http://localhost:'+ s.address().port;
+            test_server.once('callback', callback);
             request(app)
-                .post('/download?url='+ base_url +'/test.mp3')
+                .post('/download?url='+ base_url +'/'+ file +'&callback='+ base_url +"/callback")
                 .expect(200)
                 .end(function(err, res) {
                     if (err) return done(err);
-                    fs.exists(__dirname + '/../data/test.mp3', function(exist) {
-                        if (exist) done();
-                        else done(exist);
-                    });
                 });
+        });
+    }
+
+    it('should call the callback on finish', function(done) {
+        downloadWitchCallback('test.mp3', function() {
+            done();
+        });
+    });
+
+    it('should store the file on the fs', function(done) {
+        downloadWitchCallback('test.mp3', function(res) {
+            fs.exists(__dirname + '/../data/test.mp3', function(exist) {
+                if (exist) done();
+                else done(exist);
+            });
         });
     });
 
     it('should store the file based on the mp3 name', function(done) {
-        var s = test_server.listen(function() {
-            var base_url = 'http://localhost:'+ s.address().port;
-            request(app)
-                .post('/download?url='+ base_url +'/New One.mp3')
-                .expect(200)
-                .end(function(err, res) {
-                    if (err) return done(err);
-                    fs.exists(__dirname + '/../data/New One.mp3', function(exist) {
-                        if (exist) done();
-                        else done(exist);
-                    });
-                });
+        downloadWitchCallback('New One.mp3', function(res) {
+            fs.exists(__dirname + '/../data/New One.mp3', function(exist) {
+                if (exist) done();
+                else done(exist);
+            });
         });
     });
 
-    it('should call the callback on finish', function(done) {
-        var s = test_server.listen(function() {
-            test_server.once('callback', function(){ done();});
-            var base_url = 'http://localhost:'+ s.address().port;
-            request(app)
-                .post('/download?url='+ base_url +'/test.mp3&callback='+ base_url +"/callback")
-                .expect(200)
-                .end(function(err, res) {
-                    if (err) return done(err);
-                });
+    it('should extract the mp3 name from the Content-disposition header if available', function(done) {
+        downloadWitchCallback('downloadattachment', function(req) {
+            fs.exists(__dirname + '/../data/My Shiny mp3.mp3', function(exist) {
+                if (exist) done();
+                else done(exist);
+            });
+        });
+    });
+
+    it('should resist to bad Content-disposition header', function(done) {
+        downloadWitchCallback('baddownloadattachment', function(req) {
+            fs.exists(__dirname + '/../data/baddownloadattachment', function(exist) {
+                if (exist) done();
+                else done(exist);
+            });
         });
     });
 
