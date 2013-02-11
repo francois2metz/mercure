@@ -6,6 +6,7 @@ var test_server = require('./test_server').app;
 
 describe('POST /download', function() {
     before(function() {
+        app.set('token', '12345');
         var files = fs.readdirSync(__dirname +'/../data');
         files.forEach(function(file) {
             fs.unlinkSync(__dirname + '/../data/'+ file);
@@ -19,12 +20,26 @@ describe('POST /download', function() {
             .expect(400, done);
     });
 
+    it('should fail with no token', function(done) {
+        request(app)
+            .post('/download?url=test')
+            .send()
+            .expect(400, done);
+    });
+
+    it("shoud fail with bad token", function(done) {
+        request(app)
+            .post('/download?url=test&token=bad')
+            .send()
+            .expect(400, done);
+    });
+
     it('should download the file', function(done) {
         var s = test_server.listen(function() {
             var base_url = 'http://localhost:'+ s.address().port;
             test_server.once('download', function() {done();});
             request(app)
-                .post('/download?url='+ base_url +'/test.mp3')
+                .post('/download?url='+ base_url +'/test.mp3&token=12345')
                 .expect(200)
                 .end(function(err, res) {
                     if (err) return done(err);
@@ -37,7 +52,7 @@ describe('POST /download', function() {
             var base_url = 'http://localhost:'+ s.address().port;
             test_server.once('callback', callback);
             request(app)
-                .post('/download?url='+ base_url +'/'+ file +'&callback='+ base_url +"/callback")
+                .post('/download?url='+ base_url +'/'+ file +'&callback='+ base_url +"/callback&token=12345")
                 .expect(200)
                 .end(function(err, res) {
                     if (err) return done(err);
@@ -119,7 +134,7 @@ describe('POST /download', function() {
                 done();
             });
             request(app)
-                .post('/download?url='+ file_url +'&callback='+ base_url +"/callback")
+                .post('/download?url='+ file_url +'&callback='+ base_url +"/callback&token=12345")
                 .expect(200)
                 .end(function(err, res) {
                     if (err) return done(err);

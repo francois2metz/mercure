@@ -16,6 +16,7 @@ It exposes a REST API.
 ## Configuration
 
 * TODO: configure the data dir
+* TODO: configure the token
 
 ## Usage
 
@@ -34,8 +35,9 @@ It exposes a REST API.
 
 Parameters:
 
-* url: the url of the sound
-* callback: the call-back url called at then end of the download
+* url: (required) the url of the sound
+* token: (required) the token which protect the API
+* callback: (optional) the call-back url called at then end of the download
 
 Status:
 
@@ -45,7 +47,6 @@ Status:
 ## TODO
 
 * [ ] extract mp3 from youtube video
-* [ ] add a private token
 
 ## License
 
