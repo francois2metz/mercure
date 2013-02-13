@@ -159,4 +159,20 @@ describe('POST /download', function() {
             });
         });
     });
+
+    it('should handle download error (bad url, ...)', function(done) {
+        var s = test_server.listen(function() {
+            var base_url = 'http://localhost:'+ s.address().port;
+            test_server.once('callback', function(req) {
+                assert.equal(req.body.status, 'error');
+                done();
+            });
+            request(app)
+                .post('/download?url=badfile&callback='+ base_url +"/callback&token=12345")
+                .expect(200)
+                .end(function(err, res) {
+                    if (err) return done(err);
+                });
+        });
+    });
 });
