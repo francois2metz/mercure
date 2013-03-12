@@ -1,5 +1,5 @@
 # Description:
-#   Allows Hubot interact with mercurex
+#   Allows Hubot interact with mercure
 #
 # Commands:
 #   hubot download me <url>
