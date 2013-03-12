@@ -44,6 +44,20 @@ Status:
 * 200: Enqueue
 * 400: Bad request
 
+## Hubot
+
+Add to your *external_scripts.json*: "mercure".
+
+### Configuration
+
+* MERCURE_URL - the url where mercure is available
+* MERCURE_TOKEN - the private token to talk with mercure (shutt, this is a secret)
+* HUBOT_URL - the current url of the hubot (needed for the webhook)
+
+### Commands
+
+    hubot download me file
+
 ## TODO
 
 * [ ] extract mp3 from youtube video
