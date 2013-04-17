@@ -19,7 +19,7 @@ module.exports = (robot) ->
        callback: "#{HUBOT_URL}/mercure/callback/#{encodeURIComponent(msg.message.room)}"
     }).post() (err, res, body) ->
       return msg.send "error" if err
-      return msg.send "Downloading #{msg.match[1]}" if res.statusCode == 200
+      return msg.send "Downloading #{msg.match[1]}" if res.statusCode == 202
 
   robot.router.post "/mercure/callback/:room", (req, res) ->
     robot.messageRoom req.params.room, "File #{req.body.url} (#{req.body.size}): #{req.body.status}"

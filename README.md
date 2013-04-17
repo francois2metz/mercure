@@ -41,7 +41,7 @@ Parameters:
 
 Status:
 
-* 200: Enqueue
+* 202: Enqueued
 * 400: Bad request
 
 ## Hubot

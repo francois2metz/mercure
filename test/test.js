@@ -40,7 +40,7 @@ describe('POST /download', function() {
             test_server.once('download', function() {done();});
             request(app)
                 .post('/download?url='+ base_url +'/test.mp3&token=12345')
-                .expect(200)
+                .expect(202)
                 .end(function(err, res) {
                     if (err) return done(err);
                 });
@@ -53,7 +53,7 @@ describe('POST /download', function() {
             test_server.once('callback', callback);
             request(app)
                 .post('/download?url='+ base_url +'/'+ file +'&callback='+ base_url +"/callback&token=12345")
-                .expect(200)
+                .expect(202)
                 .end(function(err, res) {
                     if (err) return done(err);
                 });
@@ -144,7 +144,7 @@ describe('POST /download', function() {
             });
             request(app)
                 .post('/download?url='+ file_url +'&callback='+ base_url +"/callback&token=12345")
-                .expect(200)
+                .expect(202)
                 .end(function(err, res) {
                     if (err) return done(err);
                 });
@@ -169,7 +169,7 @@ describe('POST /download', function() {
             });
             request(app)
                 .post('/download?url=badfile&callback='+ base_url +"/callback&token=12345")
-                .expect(200)
+                .expect(202)
                 .end(function(err, res) {
                     if (err) return done(err);
                 });
