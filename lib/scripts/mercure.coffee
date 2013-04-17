@@ -1,8 +1,16 @@
 # Description:
 #   Allows Hubot interact with mercure
 #
+# Configuration:
+#   MERCURE_URL - The URL of the mercure instance
+#   MERCURE_TOKEN - The private token
+#   HUBOT_URL - the URL of the this hubot
+#
 # Commands:
 #   hubot download me <url>
+#
+# URLS:
+#   /mercure/callback/:room - the callback URL when to download is finished
 
 util = require 'util'
 url = require 'url'
