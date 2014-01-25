@@ -3,6 +3,10 @@
   "description": "Download files via an API.",
   "version": "0.0.1",
   "main": "./lib/index.coffee",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/francois2metz/mercure.git"
+  },
   "dependencies": {
     "express": "3.x",
     "superagent": "0.12.x"
