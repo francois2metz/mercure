@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "express": "3.x",
-    "superagent": "0.12.x"
+    "superagent": "6.0.x"
   },
   "devDependencies": {
     "supertest": "0.5.x"
